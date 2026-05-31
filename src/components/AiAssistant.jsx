@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const AiAssistant = ({ apiKey, tasks, setTasks, flashcards, setFlashcards }) => {
+const AiAssistant = ({ tasks, setTasks, flashcards, setFlashcards }) => {
+  const envApiKey = import.meta.env.VITE_GEMINI_API_KEY;
   const [chatInput, setChatInput] = useState('');
   const [messages, setMessages] = useState([
     { role: 'model', text: 'Bonjour ! Je suis ton Professeur IA spécialité STE. Comment puis-je t\'aider à réviser ?' }
@@ -9,14 +10,14 @@ const AiAssistant = ({ apiKey, tasks, setTasks, flashcards, setFlashcards }) => 
   const [isLoading, setIsLoading] = useState(false);
 
   const getGeminiModel = () => {
-    if (!apiKey) return null;
-    const genAI = new GoogleGenerativeAI(apiKey);
+    if (!envApiKey) return null;
+    const genAI = new GoogleGenerativeAI(envApiKey);
     return genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
   };
 
   const handleChat = async (e) => {
     e.preventDefault();
-    if (!chatInput.trim() || !apiKey) return;
+    if (!chatInput.trim() || !envApiKey) return;
 
     const userText = chatInput.trim();
     setMessages(prev => [...prev, { role: 'user', text: userText }]);
@@ -43,7 +44,7 @@ const AiAssistant = ({ apiKey, tasks, setTasks, flashcards, setFlashcards }) => 
   };
 
   const generateFlashcards = async () => {
-    if (!apiKey) return;
+    if (!envApiKey) return;
     setIsLoading(true);
     try {
       const model = getGeminiModel();
@@ -70,7 +71,7 @@ const AiAssistant = ({ apiKey, tasks, setTasks, flashcards, setFlashcards }) => 
   };
 
   const generateTasks = async () => {
-    if (!apiKey) return;
+    if (!envApiKey) return;
     setIsLoading(true);
     try {
       const model = getGeminiModel();
@@ -99,9 +100,9 @@ const AiAssistant = ({ apiKey, tasks, setTasks, flashcards, setFlashcards }) => 
     <div className="glass-panel ai-widget">
       <h2>Professeur IA (Gemini)</h2>
       
-      {!apiKey ? (
+      {!envApiKey ? (
         <div className="api-warning">
-          <p>⚠️ Tu dois configurer ta clé API Gemini (en haut à droite) pour utiliser l'IA.</p>
+          <p>⚠️ Clé API Gemini manquante. Ajoute VITE_GEMINI_API_KEY dans le fichier .env</p>
         </div>
       ) : (
         <>

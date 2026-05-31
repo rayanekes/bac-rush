@@ -5,10 +5,11 @@ import PomodoroTimer from './components/PomodoroTimer';
 import TaskManager from './components/TaskManager';
 import Flashcards from './components/Flashcards';
 import AiAssistant from './components/AiAssistant';
-import ApiConfig from './components/ApiConfig';
+import Exercises from './components/Exercises';
+import Syllabus from './components/Syllabus';
 
 function App() {
-  const [apiKey, setApiKey] = useState('');
+  const [activeTab, setActiveTab] = useState('dashboard');
   
   const [tasks, setTasks] = useState([
     { id: 1, text: 'Réviser le GRAFCET et les automatismes (SI)', completed: false, priority: 'high' },
@@ -31,32 +32,52 @@ function App() {
       <div className="bg-glow cyan"></div>
       <div className="bg-glow purple"></div>
 
-      <header className="header" style={{ position: 'relative' }}>
-        <div style={{ position: 'absolute', top: 0, right: 0 }}>
-          <ApiConfig apiKey={apiKey} setApiKey={setApiKey} />
-        </div>
+      <header className="header">
         <h1>Bac <span className="text-gradient">Rush</span></h1>
         <p className="subtitle">Mode Survie Activé - Spécialité STE !</p>
+        
+        <nav className="main-nav">
+          <button className={`nav-btn ${activeTab === 'dashboard' ? 'active' : ''}`} onClick={() => setActiveTab('dashboard')}>📊 Tableau de bord</button>
+          <button className={`nav-btn ${activeTab === 'training' ? 'active' : ''}`} onClick={() => setActiveTab('training')}>🏋️ Entraînement</button>
+          <button className={`nav-btn ${activeTab === 'ai' ? 'active' : ''}`} onClick={() => setActiveTab('ai')}>🤖 Professeur IA</button>
+          <button className={`nav-btn ${activeTab === 'syllabus' ? 'active' : ''}`} onClick={() => setActiveTab('syllabus')}>📈 Progression</button>
+        </nav>
       </header>
 
-      <main className="dashboard-grid">
-        <section className="top-row">
-          <Countdown />
-          <PomodoroTimer />
-        </section>
-        
-        <section className="middle-row">
-           <AiAssistant 
-              apiKey={apiKey} 
-              tasks={tasks} setTasks={setTasks} 
-              flashcards={flashcards} setFlashcards={setFlashcards} 
-           />
-        </section>
+      <main className="main-content">
+        {activeTab === 'dashboard' && (
+          <div className="dashboard-grid">
+            <section className="top-row">
+              <Countdown />
+              <PomodoroTimer />
+            </section>
+            <section className="bottom-row">
+              <TaskManager tasks={tasks} setTasks={setTasks} />
+            </section>
+          </div>
+        )}
 
-        <section className="bottom-row">
-          <TaskManager tasks={tasks} setTasks={setTasks} />
-          <Flashcards flashcardsData={flashcards} />
-        </section>
+        {activeTab === 'training' && (
+          <div className="training-grid">
+            <Exercises />
+            <Flashcards flashcardsData={flashcards} />
+          </div>
+        )}
+
+        {activeTab === 'ai' && (
+          <div className="ai-grid">
+             <AiAssistant 
+                tasks={tasks} setTasks={setTasks} 
+                flashcards={flashcards} setFlashcards={setFlashcards} 
+             />
+          </div>
+        )}
+
+        {activeTab === 'syllabus' && (
+          <div className="syllabus-grid-wrapper">
+             <Syllabus />
+          </div>
+        )}
       </main>
     </div>
   );

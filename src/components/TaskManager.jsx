@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 const TaskManager = ({ tasks, setTasks }) => {
   const [newTask, setNewTask] = useState('');
 
