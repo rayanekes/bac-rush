@@ -1,13 +1,4 @@
-import { useState } from 'react';
-
-const TaskManager = () => {
-  const [tasks, setTasks] = useState([
-    { id: 1, text: 'Réviser le GRAFCET et les automatismes (SI)', completed: false, priority: 'high' },
-    { id: 2, text: 'Refaire l\'examen national 2025 - Maths (Nombres complexes)', completed: false, priority: 'high' },
-    { id: 3, text: 'Physique: Circuit RLC en régime forcé', completed: false, priority: 'high' },
-    { id: 4, text: 'مراجعة مجزوءة الوضع البشري (الفلسفة)', completed: false, priority: 'medium' },
-    { id: 5, text: 'Anglais: Linking words and Phrasal verbs', completed: true, priority: 'medium' }
-  ]);
+const TaskManager = ({ tasks, setTasks }) => {
   const [newTask, setNewTask] = useState('');
 
   const addTask = (e) => {
@@ -17,7 +8,7 @@ const TaskManager = () => {
       id: Date.now(),
       text: newTask,
       completed: false,
-      priority: 'high' // Par défaut
+      priority: 'high'
     };
     setTasks([task, ...tasks]);
     setNewTask('');

@@ -198,3 +198,49 @@ button { font-family: 'Outfit', sans-serif; cursor: pointer; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent-purple); }
+
+/* --- AI Assistant & API Config --- */
+.api-settings-btn {
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
+  display: flex; align-items: center; justify-content: center; z-index: 1000;
+}
+.modal-content { max-width: 500px; width: 90%; }
+
+.middle-row { margin-bottom: 24px; }
+.ai-widget { 
+  border: 1px solid var(--accent-cyan);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0, 240, 255, 0.05));
+}
+.api-warning { color: var(--accent-pink); padding: 10px; text-align: center; border: 1px dashed var(--accent-pink); border-radius: 8px; }
+
+.chat-box {
+  background: rgba(0,0,0,0.3); border-radius: 12px; padding: 15px;
+  height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;
+  margin-bottom: 15px; border: 1px solid var(--card-border);
+}
+.chat-message { display: flex; width: 100%; }
+.chat-message.user { justify-content: flex-end; }
+.chat-message.model { justify-content: flex-start; }
+.message-bubble {
+  max-width: 80%; padding: 10px 15px; border-radius: 12px; font-size: 0.95rem; line-height: 1.4;
+}
+.chat-message.user .message-bubble { background: var(--accent-purple); color: white; border-bottom-right-radius: 2px; }
+.chat-message.model .message-bubble { background: rgba(255,255,255,0.1); border-bottom-left-radius: 2px; border: 1px solid var(--card-border); }
+
+.chat-form { display: flex; gap: 10px; margin-bottom: 15px; }
+.chat-form .glass-input { flex: 1; }
+
+.ai-actions { display: flex; gap: 10px; justify-content: center; }
+.ai-action-btn { font-size: 0.9rem; padding: 8px 16px; border-color: var(--accent-cyan); color: var(--accent-cyan); }
+.ai-action-btn:hover { background: rgba(0, 240, 255, 0.1); }
+.typing { animation: pulse 1.5s infinite; }
+@keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
+
